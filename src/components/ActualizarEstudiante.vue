@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="formulario">
-            <h2 class="titulo">Consultar Estudiante</h2>
+            <h2 class="titulo">Actualizar Estudiante</h2>
 
             <p type="Id" >
                 <input type="number" v-model="id" />
@@ -30,6 +30,7 @@
 
             <div class="boton-seccion">
                 <button @click="consultarPorId(id)">Buscar Estudiante</button>
+                <button @click="actualizarEstudiante()" v-if="mostrar">Actualizar Estudiante</button>
             </div>
         </div>
     </div>
@@ -38,7 +39,7 @@
 
 <script>
 import {
-    consultarPorIdFachada,
+    consultarPorIdFachada,actualizarFachada
 } from "@/clients/MatriculaClient";
 export default {
     data() {
@@ -64,6 +65,17 @@ export default {
             if (this.persona =! '') {
                 this.mostrar = true;
             }
+        },
+        async actualizarEstudiante() {
+            const idReferencia = this.id;
+            const cuerpoEstu = {
+                nombre: this.nombre,
+                apellido: this.apellido,
+                fechaNacimiento: this.fNacimiento + "T00:00:00",
+                provincia: this.provincia,
+                genero: this.genero,
+            }
+            await actualizarFachada(idReferencia, cuerpoEstu);
         },
 
     },

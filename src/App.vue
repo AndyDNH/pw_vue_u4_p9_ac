@@ -3,6 +3,10 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">Consultar Todos</router-link> |
     <router-link to="/consid">Consulta id</router-link> |
+    <router-link to="/guardar">Guardar</router-link> |
+    <router-link to="/actualizar">Actualizar</router-link> |
+    <router-link to="/parcial">Parcial</router-link> |
+    <router-link to="/borrar">Borrar</router-link> |
   </nav>
   <router-view/>
 </template>

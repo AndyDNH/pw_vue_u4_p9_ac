@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="formulario">
-            <h2 class="titulo">Consultar Estudiante</h2>
+            <h2 class="titulo">Actualizacion Parcial Estudiante</h2>
 
             <p type="Id" >
                 <input type="number" v-model="id" />
@@ -30,15 +30,17 @@
 
             <div class="boton-seccion">
                 <button @click="consultarPorId(id)">Buscar Estudiante</button>
+                <button @click="actualizaParcEstudiante()" v-if="mostrar">Actualizar Estudiante</button>
             </div>
         </div>
     </div>
 
+    <button>Borrar</button>
 </template>
 
 <script>
 import {
-    consultarPorIdFachada,
+    consultarPorIdFachada,actualizarParcialFachada
 } from "@/clients/MatriculaClient";
 export default {
     data() {
@@ -46,11 +48,11 @@ export default {
             mostrar:false,
             id:null,
             persona:'',
-            nombre: '',
-            apellido: '',
-            fNacimiento: '',
-            provincia: '',
-            genero: '',
+            nombre: null,
+            apellido: null,
+            fNacimiento: null,
+            provincia: null,
+            genero: null,
         };
     },
     methods: {
@@ -64,6 +66,33 @@ export default {
             if (this.persona =! '') {
                 this.mostrar = true;
             }
+        },
+        async actualizaParcEstudiante() {
+            const idReferencia = this.id;
+            if (this.nombre === null || this.nombre === '' ) {
+                this.nombre = null;
+            }
+            if (this.apellido === null || this.apellido === '' ) {
+                this.apellido = null;
+            }
+            if (this.fNacimiento === null || this.fNacimiento === '' ) {
+                this.fNacimiento = null;
+            }
+            if (this.provincia === null || this.provincia === '' ) {
+                this.provincia = null;
+            }
+            if (this.genero === null || this.genero === '' ) {
+                this.genero = null;
+            }
+            
+            const cuerpoEstu = {
+                nombre: this.nombre,
+                apellido: this.apellido,
+                fechaNacimiento: this.fNacimiento + "T00:00:00",
+                provincia: this.provincia,
+                genero: this.genero,
+            }
+            await actualizarParcialFachada(idReferencia, cuerpoEstu);
         },
 
     },
