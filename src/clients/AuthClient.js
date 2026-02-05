@@ -17,6 +17,12 @@ const body = {
 // }
 
 
+//indicar en ciertas paginas, no hay un unico tipo de autenticacion (
+//uso de guardianes, como se implementa
+//redirigir a una pagina de login
+//a usuarios no autorizados
+
+
 
 const obtenerToken = async () => {
     const username = "andres";

@@ -2,7 +2,7 @@ import axios from "axios";
 const URL = "http://localhost:8081/matricula/api/v1.0/estudiantes";
 
 const consultarTodos = async(token) => {
-    const data = axios.get('http://localhost:8081/matricula/api/v1.0/estudiantes',{headers:{Authorization:`Bearer ${token}`}}).then(res => res.data);
+    const data = axios.get(`${URL}`,{headers:{Authorization:`Bearer ${token}`}}).then(res => res.data);
     return data;
 }
 
@@ -13,7 +13,7 @@ const consultarPorId = async(id,token) => {
 
 
 const guardar = async(body,token) => {
-    const data = axios.post('http://localhost:8081/matricula/api/v1.0/estudiantes',body,{headers:{Authorization:`Bearer ${token}`}}).then(res=>res.data);
+    const data = axios.post(`http://localhost:8081/matricula/api/v1.0/estudiantes`,body,{headers:{Authorization:`Bearer ${token}`}}).then(res=>res.data);
     console.log(data);
     return data;
 }
