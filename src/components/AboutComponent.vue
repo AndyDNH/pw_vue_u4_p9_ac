@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-
     <div class="formulario">
       <h2 class="titulo">Listado de Estudiantes</h2>
 
@@ -22,7 +21,7 @@
             <td>{{ est.id }}</td>
             <td>{{ est.nombre }}</td>
             <td>{{ est.apellido }}</td>
-            <td>{{ est.fechaNacimiento.substring(0,10) }}</td>
+            <td>{{ est.fechaNacimiento.substring(0, 10) }}</td>
             <td>{{ est.provincia }}</td>
             <td>{{ est.genero }}</td>
           </tr>
@@ -32,30 +31,43 @@
       <p v-if="!datosTodos.length && cargado" class="mensaje">
         No existen estudiantes registrados
       </p>
-
     </div>
-
   </div>
 </template>
 
 <script>
-import { facadeConsultarTodos } from '@/clients/MatriculaClient';
+import { facadeConsultarTodos } from "@/clients/MatriculaClient";
+import { obtenerTokenFachada } from "@/clients/AuthClient";
 
 export default {
   data() {
     return {
       datosTodos: [],
-      cargado: false
+      cargado: false,
+      token: null,
     };
+  },
+  async mounted() {
+    try {
+      const res = await obtenerTokenFachada();
+      // Prueba esto: si 'res' es un objeto, busca la propiedad (ej. res.token o res.jwt)
+      this.token = typeof res === "object" ? res.token : res;
+
+      console.log("Token procesado:", this.token);
+    } catch (error) {
+      console.error("Error al obtener el token:", error);
+    }
   },
   methods: {
     async consultarEstudiantes() {
-      this.datosTodos = await facadeConsultarTodos();
+      this.datosTodos = await facadeConsultarTodos(this.token);
       this.cargado = true;
-    }
-  }
+    },
+  },
 };
 </script>
+
+<!-- tenemos que tener un authclient y luego en la pagina que uso ahi tengo el token cuando carga la pagina en el mounted, lo tengo como variable y cada que cargue un elemento le mando el token -->
 
 <style scoped>
 .container {
@@ -64,7 +76,7 @@ export default {
   align-items: flex-start;
   min-height: 80vh;
   margin-top: 40px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .formulario {

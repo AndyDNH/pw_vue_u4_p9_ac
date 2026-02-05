@@ -131,12 +131,6 @@ input {
 }
 
 
-input[readonly] {
-    background-color: #f2f2f2;
-    cursor: not-allowed;
-}
-
-
 .boton-seccion {
     text-align: center;
     margin-top: 30px;

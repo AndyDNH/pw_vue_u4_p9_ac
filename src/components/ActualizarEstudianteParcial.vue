@@ -34,8 +34,6 @@
             </div>
         </div>
     </div>
-
-    <button>Borrar</button>
 </template>
 
 <script>
