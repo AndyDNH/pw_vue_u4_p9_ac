@@ -57,7 +57,8 @@ export default {
     },
     methods: {
         async consultarPorId(id) {
-            this.persona = await consultarPorIdFachada(id);
+            const token =  localStorage.getItem("token");
+            this.persona = await consultarPorIdFachada(id,token);
             this.nombre = this.persona.nombre;
             this.apellido = this.persona.apellido;
             this.fNacimiento = this.persona.fechaNacimiento.substring(0, 10);
@@ -69,7 +70,8 @@ export default {
         },
         async borrarEstudiante() {
             const idReferencia = this.id;
-            await borrarFachada(idReferencia);
+            const token =  localStorage.getItem("token");
+            await borrarFachada(idReferencia,token);
             this.exito = true;
         },
 

@@ -53,7 +53,8 @@ export default {
           provincia: this.provincia,
           genero: this.genero,
       }
-      await guardarFachada(cuerpoEstu);
+      const token =  localStorage.getItem("token");
+      await guardarFachada(cuerpoEstu,token);
     },
   },
 };

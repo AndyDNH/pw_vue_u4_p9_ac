@@ -56,7 +56,8 @@ export default {
     },
     methods: {
         async consultarPorId(id){
-            this.persona =  await consultarPorIdFachada(id);
+            const token =  localStorage.getItem("token");
+            this.persona =  await consultarPorIdFachada(id,token);
             this.nombre = this.persona.nombre;
             this.apellido = this.persona.apellido;
             this.fNacimiento = this.persona.fechaNacimiento.substring(0,10);
@@ -75,7 +76,8 @@ export default {
                 provincia: this.provincia,
                 genero: this.genero,
             }
-            await actualizarFachada(idReferencia, cuerpoEstu);
+            const token =  localStorage.getItem("token");
+            await actualizarFachada(idReferencia, cuerpoEstu,token);
         },
 
     },

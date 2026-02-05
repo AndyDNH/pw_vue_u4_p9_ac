@@ -48,24 +48,24 @@ export default {
       fNacimiento: "",
       provincia: "",
       genero: "",
-      token:null
     };
   },
-  async mounted() {
-    try {
-      const res = await obtenerTokenFachada();
-      // Prueba esto: si 'res' es un objeto, busca la propiedad (ej. res.token o res.jwt)
-      this.token = typeof res === "object" ? res.token : res;
+  // async mounted() {
+  //   try {
+  //     const res = await obtenerTokenFachada();
+  //     // Prueba esto: si 'res' es un objeto, busca la propiedad (ej. res.token o res.jwt)
+  //     this.token = typeof res === "object" ? res.token : res;
 
-      console.log("Token procesado:", this.token);
-    } catch (error) {
-      console.error("Error al obtener el token:", error);
-    }
-  },
+  //     console.log("Token procesado:", this.token);
+  //   } catch (error) {
+  //     console.error("Error al obtener el token:", error);
+  //   }
+  // },
 
   methods: {
     async consultarPorId(id) {
-      this.persona = await consultarPorIdFachada(id,this.token);
+      const token =  localStorage.getItem("token");
+      this.persona = await consultarPorIdFachada(id,token);
       this.nombre = this.persona.nombre;
       this.apellido = this.persona.apellido;
       this.fNacimiento = this.persona.fechaNacimiento.substring(0, 10);

@@ -44,27 +44,16 @@ export default {
     return {
       datosTodos: [],
       cargado: false,
-      token: null,
     };
-  },
-  async mounted() {
-    try {
-      const res = await obtenerTokenFachada();
-      // Prueba esto: si 'res' es un objeto, busca la propiedad (ej. res.token o res.jwt)
-      this.token = typeof res === "object" ? res.token : res;
-
-      console.log("Token procesado:", this.token);
-    } catch (error) {
-      console.error("Error al obtener el token:", error);
-    }
   },
   methods: {
     async consultarEstudiantes() {
-      this.datosTodos = await facadeConsultarTodos(this.token);
+      const token =  localStorage.getItem("token");
+      this.datosTodos = await facadeConsultarTodos(token);
       this.cargado = true;
     },
   },
-};
+};  
 </script>
 
 <!-- tenemos que tener un authclient y luego en la pagina que uso ahi tengo el token cuando carga la pagina en el mounted, lo tengo como variable y cada que cargue un elemento le mando el token -->
