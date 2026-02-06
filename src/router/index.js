@@ -5,8 +5,15 @@ import GuardarEstudianteView from '@/views/GuardarEstudianteView.vue'
 import ActualizarEstudianteView from '@/views/ActualizarEstudianteView.vue'
 import ActualizarEstudianteParcialView from '@/views/ActualizarEstudianteParcialView.vue'
 import BorrarEstudianteView from '@/views/BorrarEstudianteView.vue'
+import LoginView from '@/views/LoginView.vue'
 
 const routes = [
+
+  {
+    path: '/',
+    name: 'login',
+    component: LoginView,
+  },
   {
     path: '/',
     name: 'home',
@@ -87,8 +94,17 @@ const router = createRouter({
 //n_n
 router.beforeEach((to, from, next) => {
   if (to.meta.requiereAutorizacion) {
+    const estaAutenticado = localStorage.getItem("estaAutenticado")
+    const token = localStorage.getItem("tkn")
+    if (!estaAutenticado) {
+      console.log("redirigiendo a login");
+      next({ name: 'login' })
+    }
+    else {
+      console.log("Esta Autenticado");
+      next()
+    }
     // le envio a una pagina de login si requiere autorizacion
-    console.log("redirigiendo a login");
 
   } else {
     //le dejo que pase sin validaciones
