@@ -14,16 +14,29 @@
 <script>
 import { obtenerTokenFachada } from '@/clients/AuthClient';
 export default {
-  async mounted() {
-    try {
-       await obtenerTokenFachada();
-       const token = localStorage.getItem("token");
-       console.log("Token unico generado: ",token);
-
-    } catch (error) {
-      console.error("Error al obtener el token:", error);
+  mounted() {
+    window.addEventListener("beforeunload",this.limpiarSesion)
+  },
+  methods:{
+    limpiarSesion(){
+      localStorage.removeItem("token");
+      localStorage.removeItem("estaAutenticado"); 
     }
   },
+
+  beforeUnmount() {
+    window.removeEventListener("beforeunload",this.limpiarSesion)
+  },
+  // async mounted() {
+  //   try {
+  //      await obtenerTokenFachada();
+  //      const token = localStorage.getItem("token");
+  //      console.log("Token unico generado: ",token);
+
+  //   } catch (error) {
+  //     console.error("Error al obtener el token:", error);
+  //   }
+  // },
 }
 </script>
 

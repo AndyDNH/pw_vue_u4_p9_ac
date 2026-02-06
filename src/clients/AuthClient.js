@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const body = {
-    "username": "andres",
-    "password": "root"
-};
+// const body = {
+//     "username": "andres",
+//     "password": "root"
+// };
 
 // const obtenerToken = async () => {
 //     try {
@@ -24,9 +24,8 @@ const body = {
 
 
 
-const obtenerToken = async () => {
-    const username = "andres";
-    const password = "root";
+const obtenerToken = async (username,password) => {
+    console.log(username,password);
     
     try {
         const response = await axios.get(`http://localhost:8082/autorizacion/token?username=${username}&password=${password}`).then(response => {
@@ -40,6 +39,6 @@ const obtenerToken = async () => {
 }
 
 
-export const obtenerTokenFachada = async() => {
-    return await obtenerToken();
+export const obtenerTokenFachada = async(username,password) => {
+    return await obtenerToken(username,password);
 }

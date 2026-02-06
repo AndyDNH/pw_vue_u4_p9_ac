@@ -10,7 +10,7 @@ import LoginView from '@/views/LoginView.vue'
 const routes = [
 
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     component: LoginView,
   },
@@ -95,17 +95,18 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiereAutorizacion) {
     const estaAutenticado = localStorage.getItem("estaAutenticado")
-    const token = localStorage.getItem("tkn")
+    const token = localStorage.getItem("token")
     if (!estaAutenticado) {
       console.log("redirigiendo a login");
-      next({ name: 'login' })
+      next({ 
+        name: 'login' ,
+        query:{redirect: to.fullPath}
+      })
     }
     else {
       console.log("Esta Autenticado");
       next()
     }
-    // le envio a una pagina de login si requiere autorizacion
-
   } else {
     //le dejo que pase sin validaciones
     console.log("pase libre");

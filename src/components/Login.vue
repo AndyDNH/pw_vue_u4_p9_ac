@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1>Redirigido</h1>
+    <h1>Login</h1>
     <input type="text" placeholder="Usuario" v-model="usuario" />
     <input type="password" placeholder="Password" v-model="password" />
     <button v-on:click="login()">Entrar</button>
@@ -17,14 +17,15 @@ export default {
     };
   },
   methods: {
-    login() {
-      const Token = localStorage.getItem("token")
+    async login() {
+      await obtenerTokenFachada(this.usuario,this.password)
+      const Token = localStorage.getItem("token");
       if (Token !== null) {
-        localStorage.setItem("tkn", Token);
         localStorage.setItem("estaAutenticado", true);
         console.log("token no vacio");
         console.log("unTOken",Token);
-    
+        const redirectPath = this.$route.query.redirect || {name: 'home'}
+        this.$router.push(redirectPath)
       } else {
         console.log("Error de autenticacion");
       }
